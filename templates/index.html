@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Personalized Workout & Diet Planner</title>
+		<link
+			rel="stylesheet"
+			href="{{ url_for('static', filename='style.css') }}"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+		/>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Personalized Workout & Diet Planner</h1>
+
+			<div class="flex-container">
+				<div class="left">
+					<form method="POST">
+						<div class="input-group">
+							<i class="fa fa-user"></i>
+							<input type="number" name="age" placeholder="Age" required />
+						</div>
+						<div class="input-group">
+							<i class="fa fa-weight"></i>
+							<input
+								type="number"
+								name="weight"
+								placeholder="Weight (kg)"
+								required
+							/>
+						</div>
+						<div class="input-group">
+							<i class="fa fa-arrows-up-down"></i>
+							<input
+								type="number"
+								name="height"
+								placeholder="Height (cm)"
+								required
+							/>
+						</div>
+						<div class="input-group">
+							<i class="fa fa-bullseye"></i>
+							<select name="goal">
+								<option value="fat_loss">Weight Loss</option>
+								<option value="muscle_gain">Muscle Gain</option>
+							</select>
+						</div>
+						<div class="input-group">
+							<i class="fa fa-dumbbell"></i>
+							<select name="level">
+								<option value="beginner">Beginner</option>
+								<option value="intermediate">Intermediate</option>
+								<option value="advanced">Advanced</option>
+							</select>
+						</div>
+						<div class="input-group">
+							<i class="fa fa-utensils"></i>
+							<select name="diet">
+								<option value="veg">Vegetarian</option>
+								<option value="non-veg">Non-Vegetarian</option>
+								<option value="both">Both</option>
+							</select>
+						</div>
+						<div class="input-group">
+							<i class="fa fa-clock"></i>
+							<select name="time">
+								<option value="15 mins">15 mins</option>
+								<option value="30 mins">30 mins</option>
+								<option value="45 mins">45 mins</option>
+								<option value="60 mins">60 mins</option>
+							</select>
+						</div>
+						<button type="submit">
+							<i class="fa fa-play"></i> Generate Plan
+						</button>
+					</form>
+				</div>
+
+				<div class="right">
+					{% if workout_plan %}
+					<div class="results">
+						<h2><i class="fa fa-dumbbell"></i> Workout Plan</h2>
+						<ul>
+							{% for exercise in workout_plan %}
+							<li>
+								<strong>{{ exercise[0] }}</strong> - {{ exercise[1] }} - {{
+								exercise[2] }}
+							</li>
+							{% endfor %}
+						</ul>
+
+						<h2><i class="fa fa-utensils"></i> Diet Plan</h2>
+						<ul>
+							<li><strong>Breakfast:</strong> {{ breakfast }}</li>
+							<li><strong>Lunch:</strong> {{ lunch }}</li>
+							<li><strong>Dinner:</strong> {{ dinner }}</li>
+						</ul>
+
+						<h2><i class="fa fa-heartbeat"></i> BMI</h2>
+						<p>
+							Value: <strong>{{ bmi_value }}</strong> | Status:
+							<strong>{{ bmi_status }}</strong>
+						</p>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
